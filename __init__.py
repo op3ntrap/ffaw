@@ -4,12 +4,12 @@ from .auth import auth_bp
 from .logger import logger_bp
 from .tracker import tracker_bp
 from .users import user_bp
-from models import db
+from models import db as main_db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db.init_app(app)
+main_db.init_app(app)
 app.register_blueprint(api_bp, url_prefix='/api')
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(tracker_bp, url_prefix='/tracker')
