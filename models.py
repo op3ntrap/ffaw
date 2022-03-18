@@ -1,7 +1,7 @@
 import datetime
 
-from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
+from flask_sqlalchemy import SQLAlchemy
 
 # from . import app
 
