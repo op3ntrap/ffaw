@@ -1,12 +1,14 @@
-from flask import Flask
+from . import app
+# import requests
+# from models import User
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def hello_world():  # put application's code here
-	return 'Hello World!'
+#
+# @app.route('/')
+# def home():
+# 	# eew = User.query.all()
+# 	q = requests.get('http://localhost:5000/api/user/1')
+# 	return q.text
 
 
 if __name__ == '__main__':
-	app.run()
+	app.run(debug=True)
