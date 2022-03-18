@@ -1,4 +1,4 @@
-from flask_restful import Api, Resource
+from flask_restful import Api, Resource, reqparse
 from flask import jsonify
 from . import api_bp
 # noinspection PyUnresolvedReferences
@@ -14,31 +14,40 @@ class UserDetails(Resource):
 
 
 class TrackerHelper(Resource):
+	tracker_editor = reqparse.RequestParser(bundle_errors=True)
+	tracker_editor.add_argument('tracker_id',
+	                            type=int,
+	                            required=True,
+	                            choices=Tracker.current_tracker_ids(),
+	                            help='Please enter a valid integer for tracker_id')
+	tracker_editor.add_argument('units', type='str', help="Please enter the units as a string")
+	tracker_editor.add_argument('tracker_type', type=int, choices=[1, 2, 3],
+	                            help="Enter an integer from [1,3] \n 1=[Numerical] \n 2=[Categorical] \n 3=[Boolean]")
+	tracker_editor.add_argument('public', type='boolean')
+	tracker_editor.add_argument('name', type='str')
+
 	def get(self, tracker_id):
 		_tracker: Tracker = Tracker.query.get(tracker_id)
-		if _tracker.public:
-			subscribers = [f'{subscriber.first_name} {subscriber.last_name}' for subscriber in _tracker.public_users]
-		else:
-			subscribers = [f'{subscriber.first_name} {subscriber.last_name}' for subscriber in _tracker.private_users]
-		if _tracker.tracker_type != 1:
-			return jsonify(
-				name=_tracker.name,
-				created_time=_tracker.created_time,
-				units=_tracker.units,
-				tracker_type=_tracker.tracker_type,
-				public=bool(_tracker.public),
-				custom_values=[custom_value.name for custom_value in _tracker.custom_values],
-				total_users=len(subscribers)
-			)
-		return jsonify(
-			name=_tracker.name,
-			created_time=_tracker.created_time,
-			units=_tracker.units,
-			tracker_type=_tracker.tracker_type,
-			public=bool(_tracker.public),
-			total_users=len(subscribers)
-		)
+		tracker_detail = _tracker.serialize()
+		return tracker_detail
+
+	def put(self, tracker_id):
+		pass
+
+	def post(self, tracker_id):
+		pass
+
+	def delete(self, tracker_id):
+		pass
+
+
+class TrackerList(Resource):
+	def get(self):
+		_trackers = Tracker.query.all()
+		tracker_list = [_t.serialze() for _t in _trackers]
+		return jsonify(tracker_list)
 
 
 api.add_resource(UserDetails, '/user/<int:user_id>')
-api.add_resource(TrackerHelper, '/tracker/<int:tracker_id>')
+api.add_resource(TrackerList, '/trackers')
+api.add_resource(TrackerHelper, '/trackers/<int:tracker_id>')
