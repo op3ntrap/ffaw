@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="QuantSelf" type="Python.FlaskServer" singleton="true">
+    <option name="flaskDebug" value="true" />
+    <module name="QuantSelf" />
+    <option name="target" value="flask" />
+    <option name="targetType" value="PYTHON" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="FLASK_APP" value="QuantSelf" />
+    </envs>
+    <option name="SDK_HOME" value="C:\Users\risan\Python\QuantSelf\Scripts\python.exe" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+    <option name="launchJavascriptDebuger" value="false" />
+    <method v="2" />
+  </configuration>
+</component>
